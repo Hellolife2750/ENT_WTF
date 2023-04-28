@@ -1,0 +1,35 @@
+{
+    "manifest_version": 3,
+    "name": "AutoValidateExt",
+    "version": "0.5",
+    "description": "Fais tout seul les trucs chiants gente cliquer sur un bouton d'une page de co",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "contextMenus",
+        "storage"
+    ],
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "js/content.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "troll.jpg"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}
