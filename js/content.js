@@ -64,7 +64,7 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
             clickOn(mailBtn)
             clearInterval(timer);
         }
-    }, 1000);
+    }, 250);
 
 
 
@@ -161,24 +161,33 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
     }, 1000);
 
 } else if (url == "https://notes.iut.u-bordeaux.fr/") {
-
-
-    let timer = setInterval(function () {
-        studentPic = document.querySelector("img.studentPic");
-        if (studentPic) {
-            studentPic.src = "../img/troll.jpg";
-            //clearInterval(timer);
-
-        }
-        console.log(studentPic)
-    }, 1000);
-} else if (url == "https://fr.wikipedia.org/wiki/Poule") {
+    let counter = 0;
+    let studentPic;
     let timer = setInterval(function () {
         studentPic = document.querySelector("img");
         if (studentPic) {
-            studentPic.src = chrome.runtime.getURL("../img/troll.jpg");
-            clearInterval(timer);
+            counter++;
+            const newImage = new Image();
+            newImage.src = chrome.runtime.getURL("/troll.jpg");
+            studentPic.src = newImage.src;
+            counter++;
+            if (counter > 5) {
+                clearInterval(timer);
+            }
 
+        }
+        //console.log(studentPic)
+    }, 1000);
+
+} else if (url == "https://fr.wikipedia.org/wiki/Poule") {
+    let studentPic;
+    let timer = setInterval(function () {
+        studentPic = document.querySelector("img");
+        if (studentPic) {
+            const newImage = new Image();
+            newImage.src = chrome.runtime.getURL("/troll.jpg");
+            studentPic.src = newImage.src;
+            clearInterval(timer);
         }
         console.log(studentPic)
     }, 1000);
