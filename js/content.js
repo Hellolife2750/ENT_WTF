@@ -73,6 +73,13 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
     var bg;
     var uselessDate;
     var toursBoucle = 0;
+    var audio = new Audio(chrome.runtime.getURL("/ph_sound.mp3"));
+
+    document.addEventListener("keydown", function (event) {
+        if (event.code === "Space") {
+            audio.play();
+        }
+    });
 
     let timer = setInterval(function () {
         bg = document.getElementById('zv__TV-main__MSG');
@@ -195,8 +202,6 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
         }
         console.log(studentPic)
     }, 1000);
-} else {
-    changePolice();
 }
 
 function changePolice() {
