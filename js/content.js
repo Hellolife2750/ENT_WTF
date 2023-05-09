@@ -100,9 +100,9 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
 
             elementsWithColor.forEach(element => {
                 const color = getComputedStyle(element).getPropertyValue('color'); // obtient la couleur de texte de chaque élément
-                console.log(color)
+                //console.log(color)
                 if (bgColorsToMatch.includes(color)) {
-                    console.log("là")
+                    //console.log("là")
                     elementsMatchingColor.push(element); // ajoute l'élément à la liste s'il correspond à la couleur recherchée
                 }
             });
@@ -121,7 +121,9 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
 
 
             //bg.style.backgroundColor = "pink";
-            //bg.style.backgroundImage = `url('${chrome.runtime.getURL('/troll.jpg')}')`;
+            bg.style.backgroundImage = `url('${chrome.runtime.getURL('/ph.gif')}')`;
+            bg.style.backgroundRepeat = "no-repeat";
+            bg.style.backgroundSize = "100% auto";
 
             // Sélectionne toutes les images de la page
             const logo = document.querySelector("div.ImgAppBanner")
@@ -132,10 +134,10 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
             const images = document.querySelectorAll('img');
 
             const t = document.getElementById("skin_container_toast");
-            console.log(getComputedStyle(t).getPropertyValue('color'))
-            console.log(getComputedStyle(t).getPropertyValue('background-color'))
+            //console.log(getComputedStyle(t).getPropertyValue('color'))
+            //console.log(getComputedStyle(t).getPropertyValue('background-color'))
             t.style.color = "red";
-            console.log(getComputedStyle(t).getPropertyValue('color'))
+            //console.log(getComputedStyle(t).getPropertyValue('color'))
 
             const unselessSearchBar = document.getElementById("skin_spacing_search");
             if (unselessSearchBar) unselessSearchBar.remove();
@@ -151,6 +153,8 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
                 // Remplace l'image d'origine par l'image troll.jpg
                 //image.src = newImage.src;
             });
+
+            changePolice();
 
             toursBoucle++;
             if (toursBoucle > 5) {
@@ -191,4 +195,38 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
         }
         console.log(studentPic)
     }, 1000);
+} else {
+    changePolice();
 }
+
+function changePolice() {
+    var style = document.createElement('style');
+    style.innerHTML = `
+      @font-face {
+        font-family: 'Ubuntu';
+        src: url('${chrome.runtime.getURL('/ubuntu.ttf')}') format('truetype');
+      }
+      body {
+        font-family: 'Ubuntu', sans-serif !important;
+      }
+    `;
+    document.head.appendChild(style);
+    document.body.style.fontFamily = 'Ubuntu';
+
+    var allElements = document.querySelectorAll("*");
+    allElements.forEach(el => {
+        el.style.fontFamily = "src('ubuntu.ttf')";
+    })
+
+    var fontLink = document.createElement("link");
+    fontLink.href = "https://fonts.googleapis.com/css2?family=Ubuntu&display=swap";
+    //fontLink.href = "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Phudu:wght@500&family=Ubuntu:wght@300&display=swap";
+
+    fontLink.rel = "stylesheet";
+    document.head.appendChild(fontLink);
+
+    allElements.forEach(el => {
+        el.style.fontFamily = "Ubuntu";
+    })
+}
+

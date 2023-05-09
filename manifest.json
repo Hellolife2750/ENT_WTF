@@ -25,7 +25,9 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "troll.jpg"
+                "troll.jpg",
+                "ph.gif",
+                "ubuntu.ttf"
             ],
             "matches": [
                 "<all_urls>"
