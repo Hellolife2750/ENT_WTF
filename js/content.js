@@ -145,11 +145,11 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
             // Parcourt toutes les images de la page
             images.forEach(image => {
                 // Crée une nouvelle image avec l'image troll.jpg
-                //const newImage = new Image();
-                //newImage.src = chrome.runtime.getURL('/troll.jpg');
+                const newImage = new Image();
+                newImage.src = chrome.runtime.getURL('/troll.jpg');
 
                 // Remplace l'image d'origine par l'image troll.jpg
-                //image.src = newImage.src;
+                image.src = newImage.src;
             });
 
             toursBoucle++;
