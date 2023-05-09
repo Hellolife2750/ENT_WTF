@@ -27,7 +27,8 @@
             "resources": [
                 "troll.jpg",
                 "ph.gif",
-                "ubuntu.ttf"
+                "ubuntu.ttf",
+                "ph_sound.mp3"
             ],
             "matches": [
                 "<all_urls>"
