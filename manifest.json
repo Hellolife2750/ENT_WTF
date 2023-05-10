@@ -28,7 +28,9 @@
                 "troll.jpg",
                 "ph.gif",
                 "ubuntu.ttf",
-                "ph_sound.mp3"
+                "ph_sound.mp3",
+                "entIcon.png",
+                "entLogo.png"
             ],
             "matches": [
                 "<all_urls>"

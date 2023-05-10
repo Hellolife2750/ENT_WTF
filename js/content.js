@@ -73,6 +73,8 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
     var bg;
     var uselessDate;
     var toursBoucle = 0;
+    var shortcutIcon;
+    var username;
     var audio = new Audio(chrome.runtime.getURL("/ph_sound.mp3"));
 
     document.addEventListener("keydown", function (event) {
@@ -135,7 +137,11 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
             // Sélectionne toutes les images de la page
             const logo = document.querySelector("div.ImgAppBanner")
             if (logo) {
-                logo.remove();
+                logo.style.backgroundImage = `url('${chrome.runtime.getURL('/entLogo.png')}')`;
+                logo.style.backgroundRepeat = "no-repeat";
+                logo.style.backgroundSize = "100% auto";
+                logo.style.marginBottom = "20px";
+                //logo.remove();
             }
             //logo.innerHTML = `<img src="/troll.jpg">`;
             const images = document.querySelectorAll('img');
@@ -160,6 +166,21 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
                 // Remplace l'image d'origine par l'image troll.jpg
                 //image.src = newImage.src;
             });
+
+            shortcutIcon = document.querySelector("link[rel='SHORTCUT ICON']");
+            console.log(shortcutIcon)
+            if (shortcutIcon) {
+                shortcutIcon.href = chrome.runtime.getURL("/entIcon.png");
+            }
+
+            /*var allTds = document.querySelectorAll("#ztb__TV-main_items td");
+
+            allTds.forEach(td => {
+                td.style.backgroundColor = "white";
+            })*/
+
+            username = document.getElementById('z_userName');
+            username.innerText = "RocoKali";
 
             changePolice();
 
