@@ -1,3 +1,18 @@
+const PAGE_TITLE = "RocoKali ENT"; //titre page onglet
+const PLAY_SOUND_ON_SPACE = true; //jouer un son quand la barre d'espace est pressée
+const AUDIO_PLAYED = "/res/sound/ph_sound.mp3"; //audio joué lors clic espace
+const FONT_LINK = "https://fonts.googleapis.com/css2?family=Ubuntu&display=swap"; //lien google fonts de la font à charger sur la page
+const USERNAME = "RocoKali"; //nom d'utilisateur affiché sur Webmail
+const SHORTCUT_ICON = "/res/img/entIcon.png"; //icone de l'onglet
+const MAIN_LOGO = '/res/img/entLogo.png'; //logo s'afffichant en haut à gauche de la page
+const MAIN_PIC = '/res/img/ph.gif'; //image s'affichant dans la zone de messsages vide
+const BG_COLOR = 'black'; //couleur de l'arrière plan
+const FG_COLOR = '#FF9000'; //couleur du texte
+
+const RELOAD_TICK = 1000; //temps en ms du rafraichissement de l'extension tant que la page n'est pas complètment chargée
+const RELOAD_TRIES = 5; //nombre de tentatives de rafraichissement de l'extension
+
+//fonction pour cliquer sur un lien automatiqquement sur la page
 function clickOn(theLink) {
     if (theLink) {
         theLink.click();
@@ -75,13 +90,15 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
     var toursBoucle = 0;
     var shortcutIcon;
     var username;
-    var audio = new Audio(chrome.runtime.getURL("/ph_sound.mp3"));
+    var audio = new Audio(chrome.runtime.getURL(AUDIO_PLAYED));
 
-    document.addEventListener("keydown", function (event) {
-        if (event.code === "Space") {
-            audio.play();
-        }
-    });
+    if (PLAY_SOUND_ON_SPACE) {
+        document.addEventListener("keydown", function (event) {
+            if (event.code === "Space") {
+                audio.play();
+            }
+        });
+    }
 
     let timer = setInterval(function () {
         bg = document.getElementById('zv__TV-main__MSG');
@@ -101,8 +118,8 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
             });
 
             elementsMatchingColor.forEach((el) => {
-                el.style.backgroundColor = "black";
-                el.style.color = "black";
+                el.style.backgroundColor = BG_COLOR;
+                el.style.color = BG_COLOR;
             })
 
             elementsMatchingColor = [];
@@ -117,30 +134,30 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
             });
 
             elementsMatchingColor.forEach((el) => {
-                el.style.color = "black";
-                el.style.backgroundColor = "black";
+                el.style.color = BG_COLOR;
+                el.style.backgroundColor = BG_COLOR;
             })
 
             const elementsWithText = document.querySelectorAll('body *:not(script)'); // sélectionne tous les éléments qui contiennent du texte, en excluant les balises <script>
             elementsWithText.forEach(element => {
-                element.style.color = '#FF9000'; // applique la couleur de texte rouge à chaque élément
+                element.style.color = FG_COLOR; // applique la couleur de texte rouge à chaque élément
                 element.style.fontWeight = "bold";
                 element.style.fontFamily = "Arial";
             });
 
 
             //bg.style.backgroundColor = "pink";
-            bg.style.backgroundImage = `url('${chrome.runtime.getURL('/ph.gif')}')`;
+            bg.style.backgroundImage = `url('${chrome.runtime.getURL(MAIN_PIC)}')`;
             bg.style.backgroundRepeat = "no-repeat";
             bg.style.backgroundSize = "100% auto";
 
             // Sélectionne toutes les images de la page
             const logo = document.querySelector("div.ImgAppBanner")
             if (logo) {
-                logo.style.backgroundImage = `url('${chrome.runtime.getURL('/entLogo.png')}')`;
+                logo.style.backgroundImage = `url('${chrome.runtime.getURL(MAIN_LOGO)}')`;
                 logo.style.backgroundRepeat = "no-repeat";
                 logo.style.backgroundSize = "100% auto";
-                logo.style.marginBottom = "20px";
+                logo.style.margin = "20px";
                 //logo.remove();
             }
             //logo.innerHTML = `<img src="/troll.jpg">`;
@@ -168,9 +185,8 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
             });
 
             shortcutIcon = document.querySelector("link[rel='SHORTCUT ICON']");
-            console.log(shortcutIcon)
             if (shortcutIcon) {
-                shortcutIcon.href = chrome.runtime.getURL("/entIcon.png");
+                shortcutIcon.href = chrome.runtime.getURL(SHORTCUT_ICON);
             }
 
             /*var allTds = document.querySelectorAll("#ztb__TV-main_items td");
@@ -179,18 +195,43 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
                 td.style.backgroundColor = "white";
             })*/
 
-            username = document.getElementById('z_userName');
-            username.innerText = "RocoKali";
+            var allMenusTds = document.querySelectorAll("td[id*='zb__App__']:not([id*='icon']):not([id*='dropdown'])");
+            allMenusTds.forEach(td => {
+                console.log(allMenusTds);
+                td.style.backgroundColor = "white";
+                td.style.marginLeft = "20px";
+                td.style.borderRadius = "1rem";
+                td.style.paddingLeft = "20px";
+                td.style.paddingRight = "20px";
+            });
+
+            allMenusTds.forEach(td => {
+                td.addEventListener('mouseenter', function () {
+                    td.style.backgroundColor = "black";
+                });
+
+                td.addEventListener('mouseleave', function () {
+                    td.style.backgroundColor = "white";
+                    td.style.marginLeft = "20px";
+                    td.style.borderRadius = "1rem";
+                    td.style.paddingLeft = "20px";
+                    td.style.paddingRight = "20px";
+                });
+            });
+
+            document.getElementById('z_userName').innerText = USERNAME;
+
+            document.querySelector("title").innerText = PAGE_TITLE;
 
             changePolice();
 
             toursBoucle++;
-            if (toursBoucle > 5) {
+            if (toursBoucle > RELOAD_TRIES) {
                 clearInterval(timer);
             }
 
         }
-    }, 1000);
+    }, RELOAD_TICK);
 
 } else if (url == "https://notes.iut.u-bordeaux.fr/") {
     let counter = 0;
@@ -226,7 +267,7 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
 }
 
 function changePolice() {
-    var style = document.createElement('style');
+    /*var style = document.createElement('style');
     style.innerHTML = `
       @font-face {
         font-family: 'Ubuntu';
@@ -237,15 +278,15 @@ function changePolice() {
       }
     `;
     document.head.appendChild(style);
-    document.body.style.fontFamily = 'Ubuntu';
+    document.body.style.fontFamily = 'Ubuntu';*/
 
     var allElements = document.querySelectorAll("*");
-    allElements.forEach(el => {
+    /*allElements.forEach(el => {
         el.style.fontFamily = "src('ubuntu.ttf')";
-    })
+    })*/
 
     var fontLink = document.createElement("link");
-    fontLink.href = "https://fonts.googleapis.com/css2?family=Ubuntu&display=swap";
+    fontLink.href = FONT_LINK;
     //fontLink.href = "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Phudu:wght@500&family=Ubuntu:wght@300&display=swap";
 
     fontLink.rel = "stylesheet";
