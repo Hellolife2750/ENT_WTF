@@ -9,8 +9,8 @@ const MAIN_PIC = '/res/img/ph.gif'; //image s'affichant dans la zone de messsage
 const BG_COLOR = 'black'; //couleur de l'arrière plan
 const FG_COLOR = '#FF9000'; //couleur du texte
 
-const RELOAD_TICK = 1000; //temps en ms du rafraichissement de l'extension tant que la page n'est pas complètment chargée
-const RELOAD_TRIES = 5; //nombre de tentatives de rafraichissement de l'extension
+const RELOAD_TICK = 500; //temps en ms du rafraichissement de l'extension tant que la page n'est pas complètment chargée
+const RELOAD_TRIES = 25; //nombre de tentatives de rafraichissement de l'extension
 
 //fonction pour cliquer sur un lien automatiqquement sur la page
 function clickOn(theLink) {
@@ -19,11 +19,11 @@ function clickOn(theLink) {
     }
 }
 
-url = location
-if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
+url = location.toString();
+if (url.includes("https://moodle1.u-bordeaux.fr")) { //ouverture de moodle
     let connexionBtn = document.querySelector("span.login > a[href='https://moodle1.u-bordeaux.fr/login/index.php']");
     clickOn(connexionBtn);
-} else if (url.toString().includes("idp-ubx.u-bordeaux.fr/WMOODLE")) {// == "https://idp-ubx.u-bordeaux.fr/WMOODLE/wayf.php?entityID=https%3A%2F%2Fmoodle1.u-bordeaux.fr%2Fauth%2Fshibboleth&return=https%3A%2F%2Fmoodle1.u-bordeaux.fr%2FShibboleth.sso%2FWAYF%3FSAMLDS%3D1%26target%3Dcookie%253A1682702992_5eb0") {
+} /*else if (url.includes("idp-ubx.u-bordeaux.fr/WMOODLE")) {// == "https://idp-ubx.u-bordeaux.fr/WMOODLE/wayf.php?entityID=https%3A%2F%2Fmoodle1.u-bordeaux.fr%2Fauth%2Fshibboleth&return=https%3A%2F%2Fmoodle1.u-bordeaux.fr%2FShibboleth.sso%2FWAYF%3FSAMLDS%3D1%26target%3Dcookie%253A1682702992_5eb0") {
     let selectBtn = document.querySelector("input[name='Select']");
     clickOn(selectBtn);
 } else if (url.toString().includes("cas.u-bordeaux.fr/cas/login")) { //"https://cas.u-bordeaux.fr/cas/login?service=https%3A%2F%2Fidp-ubx.u-bordeaux.fr%2Fidp%2FAuthn%2FExtCas%3Fconversation%3De1s1&entityId=https%3A%2F%2Fmoodle1.u-bordeaux.fr%2Fauth%2Fshibboleth") {
@@ -46,7 +46,7 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
         //console.log(idInput)
     }, 1000);
 
-} else if (url.toString() == "https://moodle1.u-bordeaux.fr/my/") {
+} else if (url == "https://moodle1.u-bordeaux.fr/my/") {
     let courseBtn = document.querySelector("a[href='https://moodle1.u-bordeaux.fr/course']");
     clickOn(courseBtn);
 } else if (url == "https://ent.u-bordeaux.fr/uPortal/f/welcome/normal/render.uP") {
@@ -68,7 +68,7 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
         console.log(idInput)
     }, 1000);
 
-} else if (url == "https://ent.u-bordeaux.fr/uPortal/f/welcome-lo/normal/render.uP" || url == "https://ent.u-bordeaux.fr/uPortal/f/welcome-lo/normal/render.uP?u_redirectToDefault=true") {
+}*/else if (url.includes("https://ent.u-bordeaux.fr/uPortal/f/welcome-lo/normal/render.uP")) {//(url == "https://ent.u-bordeaux.fr/uPortal/f/welcome-lo/normal/render.uP" || url == "https://ent.u-bordeaux.fr/uPortal/f/welcome-lo/normal/render.uP?u_redirectToDefault=true") {
     var mailBtn;
     let timer = setInterval(function () {
         //var mailBtn = document.querySelector("a[href='https://webmel.u-bordeaux.fr/?app=mail&view=msg']");
@@ -80,10 +80,7 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
             clearInterval(timer);
         }
     }, 250);
-
-
-
-} else if (url.toString().includes("https://webmel.u-bordeaux.fr")) {
+} else if (url.includes("https://webmel.u-bordeaux.fr")) {
 
     var bg;
     var uselessDate;
@@ -156,7 +153,7 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
             if (logo) {
                 logo.style.backgroundImage = `url('${chrome.runtime.getURL(MAIN_LOGO)}')`;
                 logo.style.backgroundRepeat = "no-repeat";
-                logo.style.backgroundSize = "100% auto";
+                logo.style.backgroundSize = "90% auto";
                 logo.style.margin = "20px";
                 //logo.remove();
             }
@@ -170,9 +167,22 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
             //console.log(getComputedStyle(t).getPropertyValue('color'))
 
             const unselessSearchBar = document.getElementById("skin_spacing_search");
-            if (unselessSearchBar) unselessSearchBar.remove();
+            if (unselessSearchBar) {
+                //uselessDate.style.display = "none";
+                unselessSearchBar.remove()
+            };
             //const uselessDate = document.getElementById("DWT48");
-            //if (uselessDate) uselessDate.remove()
+
+            const unselessDateContainer = document.getElementById("skin_container_tree_footer");
+            const unselessDateContainer2 = document.getElementById("skin_tr_tree_footer");
+            const unContainer = document.querySelector(".skin_layout_row.skin_layout_filler")
+            if (uselessDate) {
+                uselessDate.remove();
+                //unselessDateContainer.style.display = "none";
+                unselessDateContainer.remove();
+                unselessDateContainer2.remove();
+                unContainer.style.height = "800px !important";
+            }
 
             // Parcourt toutes les images de la page
             images.forEach(image => {
@@ -197,7 +207,7 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
 
             var allMenusTds = document.querySelectorAll("td[id*='zb__App__']:not([id*='icon']):not([id*='dropdown'])");
             allMenusTds.forEach(td => {
-                console.log(allMenusTds);
+                //console.log(allMenusTds);
                 td.style.backgroundColor = "white";
                 td.style.marginLeft = "20px";
                 td.style.borderRadius = "1rem";
@@ -233,26 +243,34 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
         }
     }, RELOAD_TICK);
 
-} else if (url == "https://notes.iut.u-bordeaux.fr/") {
+} else if (url.includes("notes.iut.u-bordeaux.fr")) {
     let counter = 0;
     let studentPic;
+    let studentPic2;
     let timer = setInterval(function () {
         studentPic = document.querySelector("img");
-        if (studentPic) {
+        studentPic2 = document.querySelector("section.etudiant img");
+        let cadre = document.querySelectorAll(".etudiant");
+        let h1 = document.querySelector("h1");
+        if (cadre[0]) {
+            //console.log(cadre)
+            h1.innerText = "Relevé de taules";
             counter++;
             const newImage = new Image();
-            newImage.src = chrome.runtime.getURL("/troll.jpg");
+            newImage.src = chrome.runtime.getURL("res/img/troll.jpg");
             studentPic.src = newImage.src;
+            //studentPic2.src = newImage.src;
+
             counter++;
-            if (counter > 5) {
+            if (counter > RELOAD_TRIES) {
                 clearInterval(timer);
             }
 
         }
         //console.log(studentPic)
-    }, 1000);
+    }, RELOAD_TICK);
 
-} else if (url == "https://fr.wikipedia.org/wiki/Poule") {
+} /*else if (url == "https://fr.wikipedia.org/wiki/Poule") {
     let studentPic;
     let timer = setInterval(function () {
         studentPic = document.querySelector("img");
@@ -264,7 +282,7 @@ if (url.toString().includes("https://moodle1.u-bordeaux.fr")) {
         }
         console.log(studentPic)
     }, 1000);
-}
+}*/
 
 function changePolice() {
     /*var style = document.createElement('style');
@@ -296,4 +314,3 @@ function changePolice() {
         el.style.fontFamily = "Ubuntu";
     })
 }
-
