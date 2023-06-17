@@ -1,8 +1,11 @@
 {
     "manifest_version": 3,
-    "name": "AutoValidateExt",
+    "name": "ENT WTF",
+    "icons": {
+        "128": "res/img/entIcon.png"
+    },
     "version": "0.5",
-    "description": "Fais tout seul les trucs chiants gente cliquer sur un bouton d'une page de co",
+    "description": "Personnalise un minimum l'ENT de l'IUT de Bordeaux, avec notamment un thème sombre nous rappelant vaguement des souvenirs.",
     "permissions": [
         "activeTab",
         "scripting",
